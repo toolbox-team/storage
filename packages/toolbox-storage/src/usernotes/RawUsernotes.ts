@@ -1,6 +1,8 @@
 // type imports for doc links
 import pako from 'pako';
 
+import {_compressBlob, _decompressBlob} from '#blobInternals';
+
 /**
  * The latest usernotes schema version that this library can handle. If a
  * usernotes page reports a schema version higher than this number, it can't be
@@ -131,9 +133,8 @@ export function expandPermalink (shortenedLink: string): string {
  * @param value The object or value to compress
  * @returns The generated blob.
  */
-export function compressBlob<T> (value: T): RawUsernotesBlob<T> {
-	return Buffer.from(pako.deflate(JSON.stringify(value))).toString('base64');
-}
+export const compressBlob = <T>(value: T): RawUsernotesBlob<T> =>
+	_compressBlob(value);
 
 /**
  * Decompresses a {@linkcode RawUsernotesBlob} string into the JSON value it
@@ -142,13 +143,8 @@ export function compressBlob<T> (value: T): RawUsernotesBlob<T> {
  * @param blob The blob to decompress
  * @returns The original JSON value.
  */
-export function decompressBlob<T> (blob: RawUsernotesBlob<T>): T {
-	return JSON.parse(
-		pako.inflate(Buffer.from(blob, 'base64').toString('binary'), {
-			to: 'string',
-		}),
-	);
-}
+export const decompressBlob = <T>(blob: RawUsernotesBlob<T>): T =>
+	_decompressBlob(blob);
 
 /**
  * Checks the schema version of raw usernotes data and attempts to update it to
