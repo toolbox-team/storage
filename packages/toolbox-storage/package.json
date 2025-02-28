@@ -8,6 +8,9 @@
 	"files": [
 		"dist/*"
 	],
+	"exports": {
+		".": "./dist/index.js"
+	},
 	"imports": {
 		"#blobInternals": {
 			"node": "./dist/usernotes/blobInternals.node.js",
