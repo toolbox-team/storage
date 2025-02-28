@@ -105,8 +105,4 @@ test('expandPermalink', t => {
 	}
 });
 
-test.todo('compressBlob');
-
-test.todo('decompressBlob');
-
 test.todo('migrateUsernotesSchema');
